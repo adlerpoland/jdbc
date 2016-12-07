@@ -5,16 +5,19 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import com.project.domain.Interwencja;
 import com.project.domain.Pojazd;
 
-public class PojazdManager {
+public class InterwencjaHasPojazdManager {
 	static java.sql.Statement stmt = null;
 	static Connection conn;
 	
 	public static boolean init_database(){
 		final String DRIVER = "org.hsqldb.jdbcDriver";
 		final String DB_URL = "jdbc:hsqldb:file:db/mydb;ifexists=false;hsqldb.lock_file=false";
-		   
+		
+		//System.out.println("Nawi¹zywanie po³¹czenia z baz¹ danych\n");	
+	    
 	    //Check JDBC
 	    try 
 	    {
@@ -66,32 +69,49 @@ public class PojazdManager {
 	        //e.printStackTrace();
 	        return false;
 	    }
-	    
 	    return true;
 	}
 	
-	public static int dodajPojazd(Pojazd i){
-		int count = 0;
+	public static boolean dodajPojazdDoInterwencji(Interwencja i, Pojazd p){
 		try {
-			String st = String.format("INSERT INTO Pojazd (marka,model) VALUES ('%s','%s')",i.getMarka(),i.getModel());
-			count = conn.prepareStatement(st).executeUpdate();
-
-			st = "SELECT MAX(id) FROM Pojazd";
-			ResultSet result = stmt.executeQuery(st);
-			result.next();
-			int id = result.getInt(1);
-			//System.out.println("ID POJAZDU: "+id);
-			i.setId(id);
+			String st = String.format("INSERT INTO Interwencja_has_Pojazd (Interwencja_id,Pojazd_id) VALUES ('%s','%s')",i.getId(),p.getId());
+			conn.prepareStatement(st).executeUpdate();
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
+			return false;
 		}
-		return count;
+		return true;
 	}
 	
-	public static int policz_pojazdy(){
+	public static boolean usunPojazdZInterwencji(Interwencja i, Pojazd p){
+		try {
+			String st = String.format("DELETE FROM Interwencja_has_Pojazd WHERE Interwencja_id='%s' AND Pojazd_id='%s'",i.getId(),p.getId());
+			conn.prepareStatement(st).executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
+	
+	public static boolean skasujInterwencjaHasPojazd()
+	{
+		try {
+			String st = String.format("DELETE FROM Interwencja_has_Pojazd");
+			conn.prepareStatement(st).executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
+	
+	public static int policz_interwencje_pojazdy(){
 		try{
-			String st = String.format("SELECT Count(*) FROM Pojazd");
+			String st = String.format("SELECT Count(*) FROM Interwencja_has_Pojazd");
 			ResultSet result = stmt.executeQuery(st);
 			result.next();
 			return result.getInt(1);
@@ -102,15 +122,29 @@ public class PojazdManager {
 		return 0;
 	}
 	
-	public static boolean usun_wszystkie_pojazdy(){
+	public static int policz_pojazdy_na_interwencji(Interwencja i){
 		try{
-			String st = String.format("DELETE FROM Pojazd");
-			conn.prepareStatement(st).executeUpdate();
-			return true;
+			String st = String.format("SELECT Count(*) FROM Interwencja_has_Pojazd WHERE Interwencja_id='%s'",i.getId());
+			ResultSet result = stmt.executeQuery(st);
+			result.next();
+			return result.getInt(1);
 		}
 		catch (SQLException e) {
 			e.printStackTrace();
-			return false;
 		}
+		return 0;
+	}
+	
+	public static int policz_interwencje_do_pojazdu(Pojazd i){
+		try{
+			String st = String.format("SELECT Count(*) FROM Interwencja_has_Pojazd WHERE Pojazd_id='%s'",i.getId());
+			ResultSet result = stmt.executeQuery(st);
+			result.next();
+			return result.getInt(1);
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return 0;
 	}
 }
