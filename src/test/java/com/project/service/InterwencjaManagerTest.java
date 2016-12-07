@@ -12,51 +12,70 @@ public class InterwencjaManagerTest {
 	private final static String ULICA = "KARTUSKA";
 	private final static int NUMER = 152;
 	
+	static Interwencja interwencja_x = new Interwencja(DATA,MIEJSCOWOSC,ULICA,NUMER);
+	static Interwencja interwencja_z = new Interwencja("2015-02-1","GDANSK","SZEROKA",16);
+	
 	@Test 
-	public void test_connection_and_create_tables()
+	public void test_connection()
 	{
-		InterwencjaManager x = new InterwencjaManager();
-		assertTrue(x.init_database());
+		assertTrue(InterwencjaManager.init_database());
 		
 	}
 	
 	@Test
 	public void test_dodaj_jedna_interwencje()
-	{
-		Interwencja interwencja = new Interwencja(DATA,MIEJSCOWOSC,ULICA,NUMER);
-		
-		assertEquals(1,InterwencjaManager.dodajInterwencja(interwencja));
+	{		
+		InterwencjaManager.init_database();
+		assertTrue(InterwencjaManager.dodajInterwencja(interwencja_x));
 	}
+	
 	
 	@Test
 	public void test_policz_interwencje()
 	{
+		InterwencjaManager.init_database();
+		InterwencjaManager.usun_wszystkie_interwencje();
+		
 		Interwencja interwencja = new Interwencja(DATA,MIEJSCOWOSC,ULICA,NUMER);
 		InterwencjaManager.dodajInterwencja(interwencja);
+		Interwencja interwencja_2 = new Interwencja(DATA,MIEJSCOWOSC,ULICA,NUMER);
+		InterwencjaManager.dodajInterwencja(interwencja_2);
 		
-		assertEquals(2,InterwencjaManager.policz_interwencje());
+		InterwencjaManager.dodajInterwencja(interwencja_z);
+		
+		assertEquals(3,InterwencjaManager.policz_interwencje());
 	}
 	
 	@Test
 	public void test_usun_jedna_interwencje()
 	{
-		Interwencja interwencja = new Interwencja("2010-01-01","GDAÑSK","TORUÑSKA",15);
+		InterwencjaManager.init_database();
+		InterwencjaManager.usun_wszystkie_interwencje();
+		
+		Interwencja interwencja = new Interwencja(DATA,MIEJSCOWOSC,ULICA,NUMER);
 		InterwencjaManager.dodajInterwencja(interwencja);
 		
-		assertTrue(InterwencjaManager.usun_interwencje(interwencja));
-		assertEquals(2,InterwencjaManager.policz_interwencje());
+		Interwencja interwencja_2 = new Interwencja("2010-01-01","GDAÑSK","TORUÑSKA",15);
+		InterwencjaManager.dodajInterwencja(interwencja_2);
+		
+		InterwencjaManager.usun_interwencje(interwencja_2);
+		assertEquals(1,InterwencjaManager.policz_interwencje());
 	}
+	
 	
 	@Test
 	public void test_usun_wszystkie_interwencje()
 	{
-		assertTrue(InterwencjaManager.usun_wszystkie_interwencje());
+		InterwencjaManager.init_database();
+		InterwencjaManager.usun_wszystkie_interwencje();
 		assertEquals(0,InterwencjaManager.policz_interwencje());
 	}
+	
 	
 	@Test
 	public void test_zmien_dane_interwencji()
 	{
+		InterwencjaManager.init_database();
 		Interwencja interwencja = new Interwencja("2013-01-01","GDYNIA","STARA",1);
 		InterwencjaManager.dodajInterwencja(interwencja);
 		
