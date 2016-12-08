@@ -69,6 +69,9 @@ public class InterwencjaManagerTest {
 	public void testUsunWszystkieInterwencje()
 	{
 		InterwencjaManager.initDatabase();
+		Interwencja interwencja_2 = new Interwencja("2010-01-01","GDANSK","TORUNSKA",15);
+		InterwencjaManager.dodajInterwencja(interwencja_2);
+		
 		InterwencjaManager.usunWszystkieInterwencje();
 		assertEquals(0,InterwencjaManager.policzInterwencje());
 	}
