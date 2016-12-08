@@ -14,17 +14,17 @@ public class PojazdManagerTest {
 	static Pojazd pojazd_5 = new Pojazd("STAR","B");
 	
 	@Test
-	public void test_dodaj_trzy_pojazdy()
+	public void testDodajTrzyPojazdy()
 	{		
-		PojazdManager.init_database();
-		PojazdManager.usun_wszystkie_pojazdy();
+		PojazdManager.initDatabase();
+		PojazdManager.usunWszystkiePojazdy();
 		
-		PojazdManager.dodajPojazd(pojazd_1);
-		PojazdManager.dodajPojazd(pojazd_2);
-		PojazdManager.dodajPojazd(pojazd_3);
-		PojazdManager.dodajPojazd(pojazd_4);
-		PojazdManager.dodajPojazd(pojazd_5);
-		assertEquals(5,PojazdManager.policz_pojazdy());
+		assertEquals(1,PojazdManager.dodajPojazd(pojazd_1));
+		assertEquals(1,PojazdManager.dodajPojazd(pojazd_2));
+		assertEquals(1,PojazdManager.dodajPojazd(pojazd_3));
+		assertEquals(1,PojazdManager.dodajPojazd(pojazd_4));
+		assertEquals(1,PojazdManager.dodajPojazd(pojazd_5));
+		assertEquals(5,PojazdManager.policzPojazdy());
 	}
 	
 	

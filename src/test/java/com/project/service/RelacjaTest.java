@@ -10,18 +10,18 @@ import com.project.domain.Pojazd;
 
 public class RelacjaTest {
 
-	Interwencja interwencja_1 = new Interwencja("2010-01-01","GDAÑSK","TORUÑSKA",15);
-	Interwencja interwencja_2 = new Interwencja("2010-01-01","GDAÑSK","TORUÑSKA",15);
+	Interwencja interwencja_1 = new Interwencja("2010-01-01","GDANSK","TORUNSKA",15);
+	Interwencja interwencja_2 = new Interwencja("2010-01-01","GDANSK","TORUNSKA",15);
 	Pojazd pojazd_1 = new Pojazd("STAR","C");
 	Pojazd pojazd_2 = new Pojazd("STAR","D");
 	
 	//DODANIE POJAZDOW DO INTERWENCJI
 	@Test
-	public void test_dodaj_pojazdy_do_interwencji()
+	public void testDodajPojazdyDoInterwencji()
 	{	
-		PojazdManager.init_database();
-		InterwencjaManager.init_database();
-		InterwencjaHasPojazdManager.init_database();
+		PojazdManager.initDatabase();
+		InterwencjaManager.initDatabase();
+		InterwencjaHasPojazdManager.initDatabase();
 		
 		InterwencjaHasPojazdManager.skasujInterwencjaHasPojazd();
 
@@ -35,16 +35,16 @@ public class RelacjaTest {
 		assertTrue(InterwencjaHasPojazdManager.dodajPojazdDoInterwencji(interwencja_1,pojazd_2));
 		assertTrue(InterwencjaHasPojazdManager.dodajPojazdDoInterwencji(interwencja_2,pojazd_1));
 		
-		assertEquals(3,InterwencjaHasPojazdManager.policz_interwencje_pojazdy());
+		assertEquals(3,InterwencjaHasPojazdManager.policzInterwencjePojazdy());
 	}
 	
 	//USUWANIE POJAZDOW Z INTERWENCJI
 	@Test
-	public void test_usun_pojazd_z_interwencji()
+	public void testUsunPojazdZInterwencji()
 	{
-		PojazdManager.init_database();
-		InterwencjaManager.init_database();
-		InterwencjaHasPojazdManager.init_database();
+		PojazdManager.initDatabase();
+		InterwencjaManager.initDatabase();
+		InterwencjaHasPojazdManager.initDatabase();
 		
 		InterwencjaHasPojazdManager.skasujInterwencjaHasPojazd();
 		
@@ -52,19 +52,19 @@ public class RelacjaTest {
 		PojazdManager.dodajPojazd(pojazd_1);
 		
 		assertTrue(InterwencjaHasPojazdManager.dodajPojazdDoInterwencji(interwencja_1,pojazd_1));
-		assertEquals(1,InterwencjaHasPojazdManager.policz_interwencje_pojazdy());
+		assertEquals(1,InterwencjaHasPojazdManager.policzInterwencjePojazdy());
 		assertTrue(InterwencjaHasPojazdManager.usunPojazdZInterwencji(interwencja_1,pojazd_1));
-		assertEquals(0,InterwencjaHasPojazdManager.policz_interwencje_pojazdy());
+		assertEquals(0,InterwencjaHasPojazdManager.policzInterwencjePojazdy());
 	}
 	
 	
 	//POBRANIE X NALEZACYCH DO Y
 	@Test
-	public void test_pobierz_pojazdy_nalezace_do_interwencji()
+	public void testPobierzPojazdyNalezaceDoInterwencji()
 	{
-		PojazdManager.init_database();
-		InterwencjaManager.init_database();
-		InterwencjaHasPojazdManager.init_database();
+		PojazdManager.initDatabase();
+		InterwencjaManager.initDatabase();
+		InterwencjaHasPojazdManager.initDatabase();
 		
 		InterwencjaHasPojazdManager.skasujInterwencjaHasPojazd();
 		
@@ -77,16 +77,16 @@ public class RelacjaTest {
 		assertTrue(InterwencjaHasPojazdManager.dodajPojazdDoInterwencji(interwencja_1,pojazd_2));
 		assertTrue(InterwencjaHasPojazdManager.dodajPojazdDoInterwencji(interwencja_2,pojazd_1));
 		
-		assertEquals(2,InterwencjaHasPojazdManager.policz_pojazdy_na_interwencji(interwencja_1));
+		assertEquals(2,InterwencjaHasPojazdManager.policzPojazdyNaInterwencji(interwencja_1));
 	}
 	
 	//POBRANIE Y NALEZACYCH DO X
 	@Test
-	public void test_pobierz_interwencje_przypisane_do_pojazdu()
+	public void testPobierzInterwencjePrzypisaneDoPojazdu()
 	{
-		PojazdManager.init_database();
-		InterwencjaManager.init_database();
-		InterwencjaHasPojazdManager.init_database();
+		PojazdManager.initDatabase();
+		InterwencjaManager.initDatabase();
+		InterwencjaHasPojazdManager.initDatabase();
 		
 		InterwencjaHasPojazdManager.skasujInterwencjaHasPojazd();
 		
@@ -99,16 +99,16 @@ public class RelacjaTest {
 		assertTrue(InterwencjaHasPojazdManager.dodajPojazdDoInterwencji(interwencja_1,pojazd_2));
 		assertTrue(InterwencjaHasPojazdManager.dodajPojazdDoInterwencji(interwencja_2,pojazd_1));
 		
-		assertEquals(2,InterwencjaHasPojazdManager.policz_interwencje_do_pojazdu(pojazd_1));
+		assertEquals(2,InterwencjaHasPojazdManager.policzInterwencjeDoPojazdu(pojazd_1));
 	}
 	
 	//SKASOWANIE WSZYSTKICH DODANYCH POJAZDOW DO INTERWENCJI
 	@Test
-	public void test_skasuj_wszystkie_dodane_pojazdy()
+	public void testSkasujWszystkieDodanePojazdy()
 	{
-		PojazdManager.init_database();
-		InterwencjaManager.init_database();
-		InterwencjaHasPojazdManager.init_database();
+		PojazdManager.initDatabase();
+		InterwencjaManager.initDatabase();
+		InterwencjaHasPojazdManager.initDatabase();
 		
 		InterwencjaHasPojazdManager.skasujInterwencjaHasPojazd();
 		
@@ -122,10 +122,10 @@ public class RelacjaTest {
 		assertTrue(InterwencjaHasPojazdManager.dodajPojazdDoInterwencji(interwencja_2,pojazd_1));
 		assertTrue(InterwencjaHasPojazdManager.dodajPojazdDoInterwencji(interwencja_2,pojazd_2));
 		
-		assertEquals(4,InterwencjaHasPojazdManager.policz_interwencje_pojazdy());
+		assertEquals(4,InterwencjaHasPojazdManager.policzInterwencjePojazdy());
 		
 		InterwencjaHasPojazdManager.skasujInterwencjaHasPojazd();
-		assertEquals(0,InterwencjaHasPojazdManager.policz_interwencje_pojazdy());
+		assertEquals(0,InterwencjaHasPojazdManager.policzInterwencjePojazdy());
 	}
 	
 }
