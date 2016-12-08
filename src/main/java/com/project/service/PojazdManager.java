@@ -11,7 +11,7 @@ public class PojazdManager {
 	static java.sql.Statement stmt = null;
 	static Connection conn;
 	
-	public static boolean init_database(){
+	public static boolean initDatabase(){
 		final String DRIVER = "org.hsqldb.jdbcDriver";
 		final String DB_URL = "jdbc:hsqldb:file:db/mydb;ifexists=false;hsqldb.lock_file=false";
 		   
@@ -89,7 +89,7 @@ public class PojazdManager {
 		return count;
 	}
 	
-	public static int policz_pojazdy(){
+	public static int policzPojazdy(){
 		try{
 			String st = String.format("SELECT Count(*) FROM Pojazd");
 			ResultSet result = stmt.executeQuery(st);
@@ -102,7 +102,7 @@ public class PojazdManager {
 		return 0;
 	}
 	
-	public static boolean usun_wszystkie_pojazdy(){
+	public static boolean usunWszystkiePojazdy(){
 		try{
 			String st = String.format("DELETE FROM Pojazd");
 			conn.prepareStatement(st).executeUpdate();

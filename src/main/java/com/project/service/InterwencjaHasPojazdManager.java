@@ -12,7 +12,7 @@ public class InterwencjaHasPojazdManager {
 	static java.sql.Statement stmt = null;
 	static Connection conn;
 	
-	public static boolean init_database(){
+	public static boolean initDatabase(){
 		final String DRIVER = "org.hsqldb.jdbcDriver";
 		final String DB_URL = "jdbc:hsqldb:file:db/mydb;ifexists=false;hsqldb.lock_file=false";
 		
@@ -109,7 +109,7 @@ public class InterwencjaHasPojazdManager {
 		return true;
 	}
 	
-	public static int policz_interwencje_pojazdy(){
+	public static int policzInterwencjePojazdy(){
 		try{
 			String st = String.format("SELECT Count(*) FROM Interwencja_has_Pojazd");
 			ResultSet result = stmt.executeQuery(st);
@@ -122,7 +122,7 @@ public class InterwencjaHasPojazdManager {
 		return 0;
 	}
 	
-	public static int policz_pojazdy_na_interwencji(Interwencja i){
+	public static int policzPojazdyNaInterwencji(Interwencja i){
 		try{
 			String st = String.format("SELECT Count(*) FROM Interwencja_has_Pojazd WHERE Interwencja_id='%s'",i.getId());
 			ResultSet result = stmt.executeQuery(st);
@@ -135,7 +135,7 @@ public class InterwencjaHasPojazdManager {
 		return 0;
 	}
 	
-	public static int policz_interwencje_do_pojazdu(Pojazd i){
+	public static int policzInterwencjeDoPojazdu(Pojazd i){
 		try{
 			String st = String.format("SELECT Count(*) FROM Interwencja_has_Pojazd WHERE Pojazd_id='%s'",i.getId());
 			ResultSet result = stmt.executeQuery(st);

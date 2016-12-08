@@ -11,7 +11,7 @@ public class InterwencjaManager {
 	static java.sql.Statement stmt = null;
 	static Connection conn;
 	
-	public static boolean init_database(){
+	public static boolean initDatabase(){
 		final String DRIVER = "org.hsqldb.jdbcDriver";
 	    final String DB_URL = "jdbc:hsqldb:file:db/mydb;ifexists=false;hsqldb.lock_file=false";
 		
@@ -92,7 +92,7 @@ public class InterwencjaManager {
 		return true;
 	}
 	
-	public static int policz_interwencje(){
+	public static int policzInterwencje(){
 		try{
 			String st = String.format("SELECT Count(*) FROM Interwencja");
 			ResultSet result = stmt.executeQuery(st);
@@ -105,7 +105,7 @@ public class InterwencjaManager {
 		return 0;
 	}
 	
-	public static boolean usun_interwencje(Interwencja i){
+	public static boolean usunInterwencje(Interwencja i){
 		try{
 			String st = String.format("DELETE FROM Interwencja WHERE id='%s'",i.getId());
 			conn.prepareStatement(st).executeUpdate();
@@ -117,7 +117,7 @@ public class InterwencjaManager {
 		}
 	}
 	
-	public static boolean usun_wszystkie_interwencje(){
+	public static boolean usunWszystkieInterwencje(){
 		try{
 			String st = String.format("DELETE FROM Interwencja");
 			conn.prepareStatement(st).executeUpdate();
@@ -129,11 +129,27 @@ public class InterwencjaManager {
 		}
 	}
 	
-	public static boolean aktualizuj_interwencje(long id,String data,String miejscowosc,String ulica,int numer){
+	public static boolean aktualizujInterwencje(long id,String data,String miejscowosc,String ulica,int numer){
 		try{
 			String st = String.format("UPDATE Interwencja SET data_interwencji='%s', miejscowosc='%s', ulica='%s', numer='%s' WHERE id='%s'",data,miejscowosc,ulica,numer,id);
 			conn.prepareStatement(st).executeUpdate();
 			return true;
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+	public static boolean sprawdzCzyIstnieje(long id){
+		try{
+			String st = String.format("SELECT COUNT(*) FROM Interwencja WHERE id='%s'",id);
+			ResultSet result = stmt.executeQuery(st);
+			result.next();
+			if(result.getInt(1)>=1) 
+				return true;
+			else
+				return false;
 		}
 		catch (SQLException e) {
 			e.printStackTrace();
